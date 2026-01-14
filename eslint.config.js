@@ -17,6 +17,7 @@ export default defineConfig([
     'cypress',
     '*.config.js',
     '*.config.ts',
+    'src/types/api.ts', // Auto-generated
   ]),
   {
     files: ['**/*.{ts,tsx}'],
