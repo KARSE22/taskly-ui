@@ -12,7 +12,7 @@ A modern task management application built with React, TypeScript, and TailwindC
 - **Testing:** Cypress
 - **Routing:** React Router
 - **State/Data:** TanStack Query, TanStack Form
-- **HTTP Client:** Axios
+- **API Client:** openapi-fetch (type-safe, auto-generated from OpenAPI spec)
 
 ## Getting Started
 
@@ -20,6 +20,7 @@ A modern task management application built with React, TypeScript, and TailwindC
 
 - Node.js 18+
 - npm 9+
+- [taskly-service](https://github.com/KARSE22/taskly-service) running on `http://localhost:3000`
 
 ### Installation
 
@@ -30,30 +31,52 @@ npm install
 ### Development
 
 ```bash
-# Start dev server
+# Make sure taskly-service is running first, then:
 npm run dev
+```
 
-# Start Storybook
-npm run storybook
+This will auto-generate API types from the backend's OpenAPI spec before starting the dev server.
+
+## API Type Generation
+
+Types are auto-generated from the backend's OpenAPI spec at `/openapi.json`.
+
+```bash
+# Manual generation (runs automatically with npm run dev)
+npm run generate:api
+```
+
+Usage:
+
+```typescript
+import { api } from '@/lib/api';
+
+// Fully typed requests and responses
+const { data, error } = await api.GET('/tasks');
+
+const { data } = await api.POST('/tasks', {
+  body: { title: 'New task' },
+});
 ```
 
 ## Scripts
 
-| Command                   | Description               |
-| ------------------------- | ------------------------- |
-| `npm run dev`             | Start development server  |
-| `npm run build`           | Build for production      |
-| `npm run preview`         | Preview production build  |
-| `npm run lint`            | Run ESLint                |
-| `npm run lint:fix`        | Fix ESLint errors         |
-| `npm run format`          | Format code with Prettier |
-| `npm run format:check`    | Check code formatting     |
-| `npm run test`            | Run all Cypress tests     |
-| `npm run test:open`       | Open Cypress test runner  |
-| `npm run test:e2e`        | Run e2e tests only        |
-| `npm run test:component`  | Run component tests only  |
-| `npm run storybook`       | Start Storybook           |
-| `npm run build-storybook` | Build Storybook           |
+| Command                   | Description                           |
+| ------------------------- | ------------------------------------- |
+| `npm run dev`             | Generate API types + start dev server |
+| `npm run build`           | Build for production                  |
+| `npm run preview`         | Preview production build              |
+| `npm run lint`            | Run ESLint                            |
+| `npm run lint:fix`        | Fix ESLint errors                     |
+| `npm run format`          | Format code with Prettier             |
+| `npm run format:check`    | Check code formatting                 |
+| `npm run generate:api`    | Generate API types from backend       |
+| `npm run test`            | Run all Cypress tests                 |
+| `npm run test:open`       | Open Cypress test runner              |
+| `npm run test:e2e`        | Run e2e tests only                    |
+| `npm run test:component`  | Run component tests only              |
+| `npm run storybook`       | Start Storybook                       |
+| `npm run build-storybook` | Build Storybook                       |
 
 ## Project Structure
 
@@ -63,10 +86,10 @@ src/
 ├── components/      # Reusable UI components
 │   └── ui/          # Base UI components
 ├── hooks/           # Custom React hooks
-├── lib/             # Utility functions
+├── lib/             # API client, utilities
 ├── pages/           # Page components
 ├── styles/          # Global styles
-├── types/           # TypeScript type definitions
+├── types/           # TypeScript types (including auto-generated API types)
 └── utils/           # Helper functions
 ```
 
