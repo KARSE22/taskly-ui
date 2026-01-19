@@ -15,3 +15,4 @@ export {
   SelectValue,
 } from './select';
 export { TextField } from './text-field';
+export { ThemeToggle } from './theme-toggle';
