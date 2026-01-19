@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
-import { Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/theme-provider';
+import iconLightTheme from '@/assets/icon-light-theme.svg';
+import iconDarkTheme from '@/assets/icon-dark-theme.svg';
 
 interface ThemeToggleProps {
   className?: string;
@@ -20,17 +20,16 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   return (
     <div
       className={cn(
-        'bg-light-grey dark:bg-very-dark-grey flex items-center justify-center gap-6 rounded-md px-14 py-3.5',
+        'bg-light-grey dark:bg-very-dark-grey flex items-center justify-center gap-6 rounded-md py-3.5',
         className
       )}
     >
-      <Sun
-        className={cn('size-5 transition-colors', isDark ? 'text-medium-grey' : 'text-medium-grey')}
-      />
+      <img src={iconLightTheme} alt="Light mode" className="size-[18px]" />
       <button
         type="button"
         role="switch"
         aria-checked={isDark}
+        aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         onClick={handleToggle}
         className="bg-primary hover:bg-primary-hover focus-visible:ring-primary relative h-5 w-10 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       >
@@ -41,9 +40,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           )}
         />
       </button>
-      <Moon
-        className={cn('size-5 transition-colors', isDark ? 'text-medium-grey' : 'text-medium-grey')}
-      />
+      <img src={iconDarkTheme} alt="Dark mode" className="size-[15px]" />
     </div>
   );
 }
